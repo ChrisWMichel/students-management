@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use Illuminate\Http\Request;
+use App\Http\Resources\SectionResource;
+use App\Http\Requests\Api\ListSectionRequest;
 
 class SectionController extends Controller
 {
+    public function __invoke(Request $request)
+    {
+        //dd($request->all());
+        $sections = Section::where('class_room_id', $request->class_room_id)->get();
+
+        return SectionResource::collection($sections);
+
+    }
     /**
      * Display a listing of the resource.
      */

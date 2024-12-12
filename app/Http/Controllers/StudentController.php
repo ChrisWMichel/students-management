@@ -3,16 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
+use App\Http\Resources\SectionResource;
+use App\Http\Resources\StudentResource;
+use App\Http\Resources\ClassRoomResource;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        //
+        //$students = Student::with(['class', 'section'])->get();
+
+        //$studentsResource = StudentResource::collection($students);
+        $studentsResource = StudentResource::collection(Student::paginate(10));
+
+        return inertia('Students/index', [
+            'students' => $studentsResource,
+        ]);
     }
 
     /**
@@ -20,7 +32,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $classes = ClassRoomResource::collection(ClassRoom::all());
+
+        return inertia('Students/create', [
+            'classes' => $classes,
+        ]);
     }
 
     /**

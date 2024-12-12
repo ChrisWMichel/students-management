@@ -10,8 +10,15 @@ class Student extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $with = ['class', 'section'];
+
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(ClassRoom::class, 'class_room_id');
     }
 }
