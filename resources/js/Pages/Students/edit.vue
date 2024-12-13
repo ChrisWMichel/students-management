@@ -1,17 +1,17 @@
 <template>
-    <Head title="Create Student" />
+    <Head title="Update Student" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Create Student
+                Update Student
             </h2>
         </template>
 
         <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-12">
-                    <form @submit.prevent="createStudent">
+                    <form @submit.prevent="updateStudent">
                         <div class="shadow sm:rounded-md sm:overflow-hidden">
                             <div class="px-4 py-6 space-y-6 bg-white sm:p-6">
                                 <div>
@@ -21,7 +21,8 @@
                                         Student Information
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-500">
-                                        Use this form to create a new student.
+                                        Use this form to update a current
+                                        student.
                                     </p>
                                 </div>
 
@@ -173,7 +174,7 @@
                                     type="submit"
                                     class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Save
+                                    Update Student
                                 </button>
                             </div>
                         </div>
@@ -189,21 +190,26 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import { Head, useForm, Link } from "@inertiajs/vue3";
 import axios from "axios";
-import { watch, ref } from "vue";
+import { watch, ref, onMounted } from "vue";
 
 const props = defineProps({
     classes: {
         type: Object,
         required: true,
     },
+    student: {
+        type: Object,
+        required: true,
+    },
 });
+
 const localSections = ref([]);
 const form = useForm({
-    firstname: "",
-    lastname: "",
-    email: "",
-    class_room_id: "",
-    section_id: "",
+    firstname: props.student.firstname,
+    lastname: props.student.lastname,
+    email: props.student.email,
+    class_room_id: props.student.class.id,
+    section_id: props.student.section.id,
 });
 
 watch(
@@ -218,6 +224,10 @@ watch(
     }
 );
 
+onMounted(() => {
+    getSections(form.class_room_id);
+});
+
 function getSections(classId) {
     axios
         .get(`/api/sections?class_room_id=${classId}`)
@@ -227,18 +237,11 @@ function getSections(classId) {
         .catch((error) => {
             console.log("Error fetching sections:", error);
         });
-    //     .get(`/api/sections?class_room_id=${classId}`)
-    //     .then((response) => {
-    //         console.log("response", response.data);
-    //         props.sections = response.data;
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error fetching sections:", error);
-    //     });
 }
 
-const createStudent = () => {
-    form.post(route("students.store"));
+const updateStudent = () => {
+    //console.log("student id", props.student.id);
+    form.put(route("students.update", props.student.id));
 };
 </script>
 

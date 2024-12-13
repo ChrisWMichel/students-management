@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Student;
 use App\Models\ClassRoom;
 use Illuminate\Http\Request;
@@ -42,9 +44,11 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        //
+        Student::create($request->validated());
+
+        return redirect()->route('students.index');
     }
 
     /**
@@ -60,15 +64,24 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $classes = ClassRoomResource::collection(ClassRoom::all());
+
+        return inertia('Students/edit', [
+            'student' => StudentResource::make($student),
+            'classes' => $classes,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        //dd($student);
+        $student->update($request->validated());
+
+
+        return redirect()->route('students.index');
     }
 
     /**
@@ -76,6 +89,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        return redirect()->route('students.index');
     }
 }
