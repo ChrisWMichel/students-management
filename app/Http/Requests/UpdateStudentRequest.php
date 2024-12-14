@@ -34,8 +34,8 @@ class UpdateStudentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'firstname' => 'First Name',
+            'lastname' => 'Last Name',
             'email' => 'Email',
             'class_room_id' => 'Class',
             'section_id' => 'Section',

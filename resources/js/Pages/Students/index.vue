@@ -28,7 +28,7 @@
                             </Link>
                         </div>
                     </div>
-                    <div class="flex flex-col justify-between mt-6 sm:flex-row">
+                    <div class="flex flex-col justify-start mt-6 sm:flex-row">
                         <div class="relative col-span-3 text-sm text-gray-800">
                             <div
                                 class="absolute top-0 bottom-0 left-0 flex items-center pl-2 text-gray-500 pointer-events-none"
@@ -36,12 +36,30 @@
                                 <MagnifyingGlass class="w-5 h-5" />
                             </div>
                             <input
+                                v-model="search"
                                 type="text"
                                 autocomplete="off"
                                 placeholder="Search students data..."
                                 id="search"
                                 class="block py-2 pl-10 text-gray-900 border-0 rounded-lg ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                        </div>
+                        <div class="mt-4 sm:mt-0 sm:ml-4">
+                            <select
+                                v-model="class_id"
+                                id="class_id"
+                                name="class_id"
+                                class="block w-full py-2 pl-3 pr-10 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:ring-offset-white focus:outline-none sm:text-sm"
+                            >
+                                <option value="">Filter By Class</option>
+                                <option
+                                    v-for="(item, index) in classRooms"
+                                    :key="index"
+                                    :value="item.id"
+                                >
+                                    {{ item.name }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="flex flex-col mt-8">
@@ -150,7 +168,7 @@
                                                                 student.id
                                                             )
                                                         "
-                                                        class="text-indigo-600 hover:text-indigo-900 hover:text-lg"
+                                                        class="text-indigo-600 hover:text-indigo-900"
                                                     >
                                                         Edit
                                                     </Link>
@@ -160,7 +178,7 @@
                                                                 student.id
                                                             )
                                                         "
-                                                        class="ml-2 text-indigo-600 hover:text-indigo-900 hover:text-lg"
+                                                        class="ml-2 text-indigo-600 hover:text-indigo-900 hover:underline"
                                                     >
                                                         Delete
                                                     </button>
@@ -170,19 +188,10 @@
                                     </table>
                                 </div>
                                 <div>
-                                    <Pagination :data="students" />
-                                    <!-- <nav class="flex justify-between">
-                                    <button
-                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    >
-                                        Previous
-                                    </button>
-                                    <button
-                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    >
-                                        Next
-                                    </button>
-                                </nav> -->
+                                    <Pagination
+                                        :data="students"
+                                        :updatePageNumber="updatePageNumber"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -196,17 +205,64 @@
 <script setup>
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { Link, Head, useForm } from "@inertiajs/vue3";
+import { Link, Head, useForm, router, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps({
     students: {
         type: Object,
         required: true,
     },
+    classRooms: {
+        type: Object,
+        required: true,
+    },
 });
 
 const deletForm = useForm({});
+//const page = usePage();
+
+let search = ref(usePage().props.search),
+    pageNumber = ref(1),
+    class_id = ref(usePage().props.class_id);
+
+let studentsurl = computed(() => {
+    let url = new URL(route("students.index"));
+    url.searchParams.append("page", pageNumber.value);
+
+    if (search.value) {
+        url.searchParams.append("search", search.value);
+    }
+    if (class_id.value) {
+        url.searchParams.append("class_id", class_id.value);
+    }
+    return url;
+});
+
+watch(
+    () => studentsurl.value,
+    (updatedStudentUrl) => {
+        router.visit(updatedStudentUrl, {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
+    }
+);
+
+watch(
+    () => search.value,
+    (value) => {
+        if (value) {
+            pageNumber.value = 1;
+        }
+    }
+);
+
+const updatePageNumber = (link) => {
+    pageNumber.value = link.url.split("=")[1];
+};
 
 const deleteStudent = (studentId) => {
     if (confirm("Are you sure you want to delete this student?")) {

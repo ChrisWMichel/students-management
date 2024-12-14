@@ -17,15 +17,18 @@ class StudentController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        //$students = Student::with(['class', 'section'])->get();
+        $studentsQuery = Student::search($request);
 
-        //$studentsResource = StudentResource::collection($students);
-        $studentsResource = StudentResource::collection(Student::paginate(10));
+        $studentsResource = StudentResource::collection($studentsQuery->paginate(10));
+        $classRooms = ClassRoomResource::collection(ClassRoom::all());
 
         return inertia('Students/index', [
             'students' => $studentsResource,
+            'search' => $request->search ?? '',
+            'classRooms' => $classRooms,
+            'class_id' => $request->class_id ?? '',
         ]);
     }
 

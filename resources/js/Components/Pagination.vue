@@ -69,15 +69,19 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    updatePageNumber: {
+        type: Function,
+        required: true,
+    },
 });
 
-const updatePageNumber = (link) => {
-    let pageNumber = link.url.split("page=")[1];
+// const updatePageNumber = (link) => {
+//     let pageNumber = link.url.split("page=")[1];
 
-    router.visit("/students?page=" + pageNumber, {
-        preserveState: true,
-    });
-};
+//     router.visit("/students?page=" + pageNumber, {
+//         preserveState: true,
+//     });
+// };
 </script>
 
 <style></style>
