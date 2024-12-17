@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "postinstall": "php artisan migrate --force && php artisan db:seed --force"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
