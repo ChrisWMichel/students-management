@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "postinstall": ""
+        "postinstall": "sh postinstall.sh"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
