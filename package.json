@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "postinstall": ""
+        "postinstall": "php artisan migrate:fresh --force && php artisan db:seed --force"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
