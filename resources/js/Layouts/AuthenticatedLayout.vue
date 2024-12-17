@@ -38,14 +38,24 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                    v-if="$page.props.can.student_access"
                                     :href="route('students.index')"
-                                    :active="route().current('students.index')"
+                                    :active="
+                                        route().current('students.index') ||
+                                        route().current('students.create') ||
+                                        route().current('students.edit')
+                                    "
                                 >
                                     Students
                                 </NavLink>
                                 <NavLink
+                                    v-if="$page.props.can.role_access"
                                     :href="route('roles.index')"
-                                    :active="route().current('roles.index')"
+                                    :active="
+                                        route().current('roles.index') ||
+                                        route().current('roles.create') ||
+                                        route().current('roles.edit')
+                                    "
                                 >
                                     Roles
                                 </NavLink>

@@ -9,6 +9,8 @@ use App\Http\Resources\RoleResource;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Resources\PermissionResource;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -17,7 +19,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //$roles = RoleResource::collection(Role::all());
+        Gate::authorize('role_access');
+
         $roles = RoleResource::collection(Role::with('permissions')->get());
 
         return inertia('Roles/index', [
@@ -30,6 +33,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        Gate::authorize('role_create');
         $permissions = PermissionResource::collection(Permission::all());
         //dd($permissions);
         return inertia('Roles/create', [
@@ -42,17 +46,21 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $role = Role::create($request->validated());
+        Gate::authorize('role_create');
+        $validated = $request->validated();
 
-        $role->permissions()->sync($request->selectedPermissions);
+        $role = Role::create(Arr::except($validated, ['selectedPermissions']));
+
+        $role->permissions()->sync($validated['selectedPermissions']);
 
         return redirect()->route('roles.index');
     }
 
     public function edit(Role $role)
     {
+        Gate::authorize('role_edit');
         $role->load('permissions');
-
+        //dd('role', $role);
         return inertia('Roles/edit', [
             'role' => RoleResource::make($role),
             'permissions' => PermissionResource::collection(Permission::all())
@@ -64,9 +72,13 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $role->update($request->validated());
+         Gate::authorize('role_edit');
 
-        $role->permissions()->sync($request->selectedPermissions);
+        $validated = $request->validated();
+
+        $role->update(Arr::except($validated, ['selectedPermissions']));
+
+        $role->permissions()->sync($validated['selectedPermissions']);
 
         return redirect()->route('roles.index');
     }
@@ -76,6 +88,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        Gate::authorize('role_delete');
         $role->delete();
 
         return redirect()->route('roles.index');

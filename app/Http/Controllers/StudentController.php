@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\StudentResource;
 use App\Http\Resources\ClassRoomResource;
+use Illuminate\Support\Facades\Gate;
 
 class StudentController extends Controller
 {
@@ -19,6 +20,8 @@ class StudentController extends Controller
 
     public function index(Request $request)
     {
+        Gate::authorize('student_access');
+
         $studentsQuery = Student::search($request);
 
         $studentsResource = StudentResource::collection($studentsQuery->paginate(10));
@@ -37,6 +40,8 @@ class StudentController extends Controller
      */
     public function create()
     {
+        Gate::authorize('student_create');
+
         $classes = ClassRoomResource::collection(ClassRoom::all());
 
         return inertia('Students/create', [
@@ -49,17 +54,11 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
+        Gate::authorize('student_create');
+
         Student::create($request->validated());
 
         return redirect()->route('students.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Student $student)
-    {
-        //
     }
 
     /**
@@ -67,6 +66,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        Gate::authorize('student_edit');
+
         $classes = ClassRoomResource::collection(ClassRoom::all());
 
         return inertia('Students/edit', [
@@ -80,7 +81,8 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        //dd($student);
+        Gate::authorize('student_edit');
+
         $student->update($request->validated());
 
 
@@ -92,6 +94,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+        Gate::authorize('student_delete');
+
         $student->delete();
 
         return redirect()->route('students.index');

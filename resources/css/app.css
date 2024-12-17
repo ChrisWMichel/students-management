@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-checkbox {
+    margin-right: 0.5rem;
+    background: antiquewhite;
+    padding: 3px;
+}
+.p-multiselect-option {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    font-weight: bold !important;
+}
+.p-chip {
+    background: aquamarine !important;
+    font-style: bold;
+    padding: 8px !important;
+    fonrt-size: larger;
+    margin: 5px;
+    border-radius: 10px !important;
+}
+.p-icon {
+    margin-left: 5px;
+}
+.p-multiselect-list-container {
+    margin-top: 15px !important;
+    padding: 10px;
+    background: aliceblue;
+}
+.p-multiselect-label-container {
+    border: lightgray solid 0.5px !important;
+}

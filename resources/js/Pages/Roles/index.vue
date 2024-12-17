@@ -22,6 +22,7 @@
 
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                                v-if="page.props.can.role_create"
                                 :href="route('roles.create')"
                                 class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                             >
@@ -85,6 +86,10 @@
                                                     class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
                                                 >
                                                     <Link
+                                                        v-if="
+                                                            page.props.can
+                                                                .role_edit
+                                                        "
                                                         :href="
                                                             route(
                                                                 'roles.edit',
@@ -96,6 +101,10 @@
                                                         Edit
                                                     </Link>
                                                     <button
+                                                        v-if="
+                                                            page.props.can
+                                                                .role_delete
+                                                        "
                                                         @click="
                                                             deleteRole(role.id)
                                                         "
@@ -119,7 +128,7 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     roles: {
@@ -129,10 +138,11 @@ const props = defineProps({
 });
 
 const deleteForm = useForm({});
+const page = usePage();
 
 const deleteRole = (roleId) => {
     if (confirm("Are you sure you want to delete this role?")) {
-        deleteForm.post(route("roles.destroy", roleId), {
+        deleteForm.delete(route("roles.destroy", roleId), {
             preserveScroll: true,
         });
     }

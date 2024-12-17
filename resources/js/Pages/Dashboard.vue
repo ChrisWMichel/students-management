@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import testSelect from "@/Components/TestSelect.vue";
 </script>
 
 <template>
@@ -18,7 +17,6 @@ import testSelect from "@/Components/TestSelect.vue";
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">You're logged in!</div>
-                    <testSelect />
                 </div>
             </div>
         </div>

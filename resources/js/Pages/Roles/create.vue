@@ -49,19 +49,17 @@
                                             class="block text-sm font-medium text-gray-700"
                                             >Permissions</label
                                         >
-                                        {{ form.selectedPermissions }}
-                                        <Multiselect
+
+                                        <MultiSelect
                                             v-model="form.selectedPermissions"
-                                            :options="permissionsArray"
+                                            :options="permissions"
+                                            display="chip"
+                                            placeholder="Select Options"
+                                            option-label="title"
+                                            option-value="id"
                                             multiple
-                                            close-on-select
-                                            clear-on-select
-                                            preserve-search
-                                            placeholder="Pick some"
-                                            label="title"
-                                            track-by="id"
-                                            preselect-first
-                                        ></Multiselect>
+                                            class="block w-full py-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        ></MultiSelect>
                                         <InputError
                                             class="mt-2"
                                             :message="
@@ -100,10 +98,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import { defineProps, watch } from "vue";
-import Multiselect from "@vueform/multiselect";
-
-//import "@vueform/multiselect/themes/default.css";
-//import vSelect from "vue-select";
+import MultiSelect from "primevue/multiselect";
 
 const props = defineProps({
     permissions: {
@@ -112,23 +107,14 @@ const props = defineProps({
     },
 });
 
-const permissionsArray = Object.values(props.permissions);
-console.log("permissionsArray", permissionsArray);
 const form = useForm({
     title: "",
     selectedPermissions: [],
 });
-console.log("permissions", form.selectedPermissions);
-
-watch(
-    () => form.selectedPermissions,
-    (newVal) => {
-        console.log("selectedPermissions updated:", newVal);
-    }
-);
 
 const submit = () => {
     form.post(route("roles.store"), {
+        onSuccess: () => form.reset(),
         preserveScroll: true,
     });
 };

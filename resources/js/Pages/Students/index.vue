@@ -21,6 +21,7 @@
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                                v-if="page.props.can.student_create"
                                 :href="route('students.create')"
                                 class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                             >
@@ -162,6 +163,10 @@
                                                     class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
                                                 >
                                                     <Link
+                                                        v-if="
+                                                            page.props.can
+                                                                .student_edit
+                                                        "
                                                         :href="
                                                             route(
                                                                 'students.edit',
@@ -173,6 +178,10 @@
                                                         Edit
                                                     </Link>
                                                     <button
+                                                        v-if="
+                                                            page.props.can
+                                                                .student_delete
+                                                        "
                                                         @click="
                                                             deleteStudent(
                                                                 student.id
@@ -221,7 +230,7 @@ const props = defineProps({
 });
 
 const deletForm = useForm({});
-//const page = usePage();
+const page = usePage();
 
 let search = ref(usePage().props.search),
     pageNumber = ref(1),

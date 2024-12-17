@@ -27,3 +27,19 @@ const logSelected = () => {
     console.log("Selected Options:", selectedOptions.value);
 };
 </script>
+<style>
+.p-checkbox {
+    margin-right: 0.5rem;
+    background: antiquewhite;
+}
+.p-multiselect-option {
+    padding: 0 1rem;
+}
+.p-chip {
+    background-color: aquamarine;
+    font-style: bold;
+    padding: 8px;
+    fonrt-size: larger;
+    margin: 5px;
+}
+</style>

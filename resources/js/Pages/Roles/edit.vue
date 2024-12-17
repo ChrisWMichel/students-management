@@ -49,16 +49,16 @@
                                             class="block text-sm font-medium text-gray-700"
                                             >Permissions</label
                                         >
-                                        <Multiselect
+                                        <MultiSelect
                                             multiple
-                                            :options="permissions.data"
+                                            :options="permissionsArray"
                                             v-model="form.selectedPermissions"
-                                            :reduce="
-                                                (permission) => permission.id
-                                            "
-                                            label="title"
+                                            display="chip"
+                                            placeholder="Select Options"
+                                            option-label="title"
+                                            option-value="id"
                                             class="block w-full py-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                        ></Multiselect>
+                                        ></MultiSelect>
                                         <InputError
                                             class="mt-2"
                                             :message="
@@ -96,18 +96,19 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
-import Multiselect from "@vueform/multiselect";
-import "@vueform/multiselect/themes/default.css";
+import MultiSelect from "primevue/multiselect";
 
-const role = usePage().props.role;
+//const role = usePage().props.role;
+const { role, permissions } = usePage().props;
+const permissionsArray = Object.values(permissions);
 
-defineProps({
+const props = defineProps({
     permissions: {
         type: Object,
         required: true,
     },
 });
-
+//console.log("permissions", props.permissions);
 const form = useForm({
     title: role.title,
     selectedPermissions: role.permissions.map((permission) => permission.id),
@@ -116,6 +117,9 @@ const form = useForm({
 const submit = () => {
     form.put(route("roles.update", role.id), {
         preserveScroll: true,
+        onSuccess: () => {
+            form.reset("selectedPermissions");
+        },
     });
 };
 </script>
