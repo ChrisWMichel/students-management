@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\View\ViewServiceProvider;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         JsonResource::withoutWrapping();
+        //$this->registerPolicies();
     }
 }
