@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Starting deployment script..."
+
 echo "Creating necessary directories..."
 # Create necessary directories
 mkdir -p bootstrap/cache
@@ -12,11 +14,11 @@ chmod -R 775 storage/framework/views
 
 echo "Running artisan commands..."
 # Run artisan commands
-php artisan config:clear
-php artisan config:cache
-php artisan view:clear
-php artisan route:clear
-php artisan route:cache
-php artisan optimize:clear
+php artisan config:clear || echo "config:clear failed"
+php artisan config:cache || echo "config:cache failed"
+php artisan view:clear || echo "view:clear failed"
+php artisan route:clear || echo "route:clear failed"
+php artisan route:cache || echo "route:cache failed"
+php artisan optimize:clear || echo "optimize:clear failed"
 
 echo "Deployment script executed successfully."
