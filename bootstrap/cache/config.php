@@ -162,8 +162,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\framework/cache/data',
-        'lock_path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -218,7 +218,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\database\\database.sqlite',
+        'database' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\database\\database.sqlite',
         'prefix' => '',
         'foreign_key_constraints' => true,
         'busy_timeout' => NULL,
@@ -335,14 +335,14 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\app/private',
+        'root' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\app/private',
         'serve' => true,
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\app/public',
+        'root' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\app/public',
         'url' => 'http://127.0.0.1:8000//storage',
         'visibility' => 'public',
         'throw' => false,
@@ -362,7 +362,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\public\\storage' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\app/public',
+      'C:\\Users\\Chris\\Documents\\Websites\\students-management\\public\\storage' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\app/public',
     ),
   ),
   'logging' => 
@@ -387,14 +387,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -459,7 +459,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -535,7 +535,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -654,7 +654,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -780,9 +780,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\resources\\views',
+      0 => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\framework\\views',
   ),
   'debugbar' => 
   array (
@@ -798,7 +798,7 @@
       'enabled' => true,
       'open' => NULL,
       'driver' => 'file',
-      'path' => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\storage\\debugbar',
+      'path' => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
@@ -951,7 +951,7 @@
       'ensure_pages_exist' => true,
       'page_paths' => 
       array (
-        0 => 'C:\\Users\\Chris\\Documents\\www\\LaravelVueProjects\\students-management\\resources\\js/Pages',
+        0 => 'C:\\Users\\Chris\\Documents\\Websites\\students-management\\resources\\js/Pages',
       ),
       'page_extensions' => 
       array (
