@@ -20,5 +20,7 @@ export default defineConfig({
     build: {
         outDir: "public/build",
         emptyOutDir: true,
+        rollupOptions: { input: { app: "resources/js/app.js" } },
     },
+    server: { hmr: { host: "localhost" } },
 });
