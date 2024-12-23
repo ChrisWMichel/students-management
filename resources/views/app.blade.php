@@ -16,7 +16,9 @@
 
         <!-- Scripts -->
         @routes
-        @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+        {{-- @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"]) --}}
+        <link rel="stylesheet" href="{{ mix('build/css/app.css') }}">
+        <script type="module" src="{{ mix('build/js/app.js') }}"></script>
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
