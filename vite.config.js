@@ -22,5 +22,5 @@ export default defineConfig({
         emptyOutDir: true,
         rollupOptions: { input: { app: "resources/js/app.js" } },
     },
-    server: { hmr: { host: "localhost" } },
+    server: { hmr: { host: "localhost", port: 5173 } },
 });

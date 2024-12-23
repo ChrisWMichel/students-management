@@ -17,8 +17,12 @@
         <!-- Scripts -->
         @routes
         {{-- @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"]) --}}
-        <link rel="stylesheet" href="{{ mix('build/css/app.css') }}">
-        <script type="module" src="{{ mix('build/js/app.js') }}"></script>
+        @if (env('APP_ENV') === 'production')
+            <link rel="stylesheet" href="{{ asset('build/assets/app-64kUXN8b.css') }}">
+            <script type="module" src="{{ asset('build/assets/app-CF9auR9n.js') }}"></script>
+        @else
+            @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+        @endif
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
